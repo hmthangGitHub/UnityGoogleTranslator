@@ -5,7 +5,6 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using GTranslatorAPI;
 using UnityEngine;
-using WeakEvent;
 
 public class TranslatorScheduler
 {
@@ -20,14 +19,7 @@ public class TranslatorScheduler
     private readonly List<string> requestList = new List<string>();
     private readonly Dictionary<int, Translation> translateResult = new Dictionary<int, Translation>();
     private UniTaskCompletionSource ucs = default;
-    private readonly WeakEventSource<string> myEventSource = new WeakEventSource<string>();
     private string paragraphReplacement = "---";
-
-    public event EventHandler<string> OnTranslate
-    {
-        add { myEventSource.Subscribe(value); }
-        remove { myEventSource.Unsubscribe(value); }
-    }
 
     public static async UniTask<string> RequestTranslate(string originalText)
     {
